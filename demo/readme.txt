@@ -1,5 +1,5 @@
-sql脚本在：rental\src\main\resources\static
+1. 运行源码文件中，static目录下的sql脚本
 
-修改数据库密码
+2. 将rental文件放入D盘，作为图片上传的存储路径。已有部分图片作为数据。
 
-运行访问：localhost/login
+3. 这个版本主要实现了 后台的管理功能：客户信息管理、车辆信息管理

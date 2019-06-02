@@ -1,0 +1,26 @@
+web:
+  upload-path:  /data/upload
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  typeAliasesPackage: com.**.entity
+  global-config:
+    id-type: 0
+    field-strategy: 2
+    db-column-underline: true
+    capital-mode: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+logging:
+  level.com.rental.mapper: debug
+  file: ./logs/myapp.log
+
+spring:
+  profiles:
+    active: prod
+  thymeleaf:
+    cache: false
+  resources:
+    static-locations: ["file:${web.upload-path}","classpath:/META-INF/resources/","classpath:/resources/","classpath:/static/","classpath:/static/upload"]

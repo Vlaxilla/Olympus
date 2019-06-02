@@ -1,0 +1,186 @@
+package com.rental.entity;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.enums.IdType;
+
+import java.math.BigDecimal;
+import java.text.Normalizer;
+import java.util.Date;
+
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
+
+/**
+ * <p>
+ * <p>
+ * </p>
+ *
+
+ */
+public class Car implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    public static final int NEW_CAR = 0;
+    public static final int RECORD = 1;
+    public static final int BEING_USING = 2;
+    /**
+     * car id
+     */
+    @TableId(value = "cid", type = IdType.AUTO)
+    private Integer cid;
+    /**
+     * car maker
+     */
+    private String maker;
+    /**
+     * car model
+     */
+    private String model;
+    /**
+     *car type
+     */
+    private String type;
+    /**
+     * car create time
+     */
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @TableField("product_time")
+    private Date productTime;
+    /**
+     * rental per day
+     */
+    private BigDecimal rent;
+    /**
+     * car picture
+     */
+    private String cicon;
+    /**
+     * car product_time
+     */
+    @TableField("create_time")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+    /**
+     * car updateTime
+     */
+    @TableField("update_time")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
+    /**
+     *
+     */
+    private Integer disable;
+    /**
+     *
+     */
+    private Integer status;
+
+
+    public Integer getCid() {
+        return cid;
+    }
+
+    public void setCid(Integer cid) {
+        this.cid = cid;
+    }
+
+    public String getMaker() {
+        return maker;
+    }
+
+    public void setMaker(String maker) {
+        this.maker = maker;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Date getProductTime() {
+        return productTime;
+    }
+
+    public void setProductTime(Date productTime) {
+        this.productTime = productTime;
+    }
+
+    public BigDecimal getRent() {
+        return rent;
+    }
+
+    public void setRent(BigDecimal rent) {
+        this.rent = rent;
+    }
+
+    public String getCicon() {
+        return cicon;
+    }
+
+    public void setCicon(String cicon) {
+        this.cicon = cicon;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getDisable() {
+        return disable;
+    }
+
+    public void setDisable(Integer disable) {
+        this.disable = disable;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "cid=" + cid +
+                ", maker=" + maker +
+                ", model=" + model +
+                ", type=" + type +
+                ", productTime=" + productTime +
+                ", rent=" + rent +
+                ", cicon=" + cicon +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", disable=" + disable +
+                ", status=" + status +
+                "}";
+    }
+}

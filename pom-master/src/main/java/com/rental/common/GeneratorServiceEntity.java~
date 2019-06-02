@@ -1,0 +1,213 @@
+package com.rental.common;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
+import com.baomidou.mybatisplus.generator.config.rules.DbType;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+
+/**
+
+public class GeneratorServiceEntity {
+
+    /**
+     * <p>
+     * MySQL databse
+     * </p>
+     */
+    public static void main(String[] args) {
+        AutoGenerator mpg = new AutoGenerator();
+
+        TemplateConfig tplCfg = new TemplateConfig();
+        mpg.setTemplate(tplCfg);
+        // use freemarker to ，auto Veloctiy
+        // mpg.setTemplateEngine(new FreemarkerTemplateEngine());
+
+        // GlobalConfig
+        GlobalConfig gc = new GlobalConfig();
+        gc.setOutputDir("Y://temp");
+        gc.setFileOverride(true);
+        gc.setActiveRecord(false);//
+        gc.setEnableCache(false);// XML cache
+        gc.setBaseResultMap(true);// XML ResultMap
+        gc.setBaseColumnList(false);// XML columList
+        // .setKotlin(true) statically analyze your null checks
+        gc.setAuthor("rental");
+
+        // gc.setMapperName("%sDao");
+        // gc.setXmlName("%sDao");
+        // gc.setServiceName("MP%sService");
+        // gc.setServiceImplName("%sServiceDiy");
+        // gc.setControllerName("%sAction");
+        mpg.setGlobalConfig(gc);
+
+        // databse DataSourceConfig
+        DataSourceConfig dsc = new DataSourceConfig();
+        dsc.setDbType(DbType.MYSQL);
+        dsc.setTypeConvert(new MySqlTypeConvert() {
+            // Custom database table field type conversion
+            @Override
+            public DbColumnType processTypeConvert(String fieldType) {
+                System.out.println("change conversion：" + fieldType);
+                //processTypeConvert
+There is a default type conversion, if it is not the effect you want, please customize the return, not directly return as follows.
+                return super.processTypeConvert(fieldType);
+            }
+        });
+        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
+        dsc.setUsername("root");
+        dsc.setPassword("123456");
+        dsc.setUrl("jdbc:mysql://localhost:3306/rental?characterEncoding=utf8");
+        mpg.setDataSource(dsc);
+
+        //
+        StrategyConfig strategy = new StrategyConfig();
+        // strategy.setCapitalMode(true);//  ORACLE
+        /*strategy.setTablePrefix(new String[] { "tlog_", "tsys_" });*/
+        /*strategy.setTablePrefix(new String[] { "user" });// table prefix modification
+        strategy.setNaming(NamingStrategy.underline_to_camel);//
+        strategy.setInclude(new String[]{"car","comment","information","location"
+        ,"location_car","orders","user"}); //
+        // strategy.setExclude(new String[]{"test"}); //
+        // Custom entity parent class
+        // strategy.setSuperEntityClass("com.baomidou.demo.TestEntity");
+        //
+        // strategy.setSuperEntityColumns(new String[] { "test_id", "age" });
+        //  mapper
+        // strategy.setSuperMapperClass("com.baomidou.demo.TestMapper");
+        //  service
+        // strategy.setSuperServiceClass("com.baomidou.demo.TestService");
+        //  service
+        // strategy.setSuperServiceImplClass("com.baomidou.demo.TestServiceImpl");
+        // controller
+        // strategy.setSuperControllerClass("com.baomidou.demo.TestController");
+        //
+[Entity] Whether to generate field constants (default) false）
+        // public static final String ID = "test_id";
+        // strategy.setEntityColumnConstant(true);
+        // false）
+        // public Customer setName(String name) {this.name = name; return this;}
+        // strategy.setEntityBuilderModel(true);
+        mpg.setStrategy(strategy);
+
+        //
+        PackageConfig pc = new PackageConfig();
+        pc.setParent("com.rental");
+        mpg.setPackageInfo(pc);
+
+        // VM  cfg.abc
+        InjectionConfig cfg = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
+                map.put("dueape", "com.dueape.admin");
+                this.setMap(map);
+            }
+        };
+
+        //  xxList.jsp
+        List<FileOutConfig> focList = new ArrayList<FileOutConfig>();
+/*        focList.add(new FileOutConfig("/template/list.jsp.vm") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+
+                return "D://my_" + tableInfo.getEntityName() + ".jsp";
+            }
+        });
+        cfg.setFileOutConfigList(focList);
+        mpg.setCfg(cfg);*/
+
+        // xml
+        focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return "/develop/code/xml/" + tableInfo.getEntityName() + ".xml";
+            }
+        });
+        cfg.setFileOutConfigList(focList);
+        mpg.setCfg(cfg);
+
+        //  xml change menu
+        TemplateConfig tc = new TemplateConfig();
+        tc.setXml(null);
+
+
+        //   mybatis-plus/src/main/resources/templates
+        //  src/main/resources/templates
+        //    TemplateConfig tc = new TemplateConfig();
+        tc.setController("/vm/controller.java.vm");
+        tc.setEntity("/vm/entity.java.vm");
+        tc.setMapper("/vm/mapper.java.vm");
+        tc.setService("/vm/service.java.vm");
+        tc.setServiceImpl("/vm/serviceImpl.java.vm");
+        mpg.setTemplate(tc);
+        //  OR Null module
+       mpg.setCfg(customerConfig("/vm/InfoBean.vm","Y://temp"));
+     // mpg.setCfg(docConfig("/vm/doc.vm", "Y://temp"));
+        //
+        mpg.execute();
+
+
+        System.out.println(mpg.getCfg());
+        System.out.println(mpg.getCfg().getMap());
+        System.out.println(mpg.getCfg().getMap().get("dueape"));
+
+    }
+
+
+    private static InjectionConfig customerConfig(String vmPath, String output) {
+        InjectionConfig config = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
+                map.put("dueape", "com.dueape.admin");
+                this.setMap(map);
+            }
+        };
+        List<FileOutConfig> files = new ArrayList<FileOutConfig>();
+        files.add(new FileOutConfig(vmPath) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                String expand = output + "/" + "expand/";
+                String entityFile = String.format(("%sInfoBean" + ".java"), tableInfo.getEntityName());
+                return expand + entityFile;
+            }
+        });
+        config.setFileOutConfigList(files);
+        return config;
+    }
+
+    private static InjectionConfig docConfig(String vmPath, String output) {
+        InjectionConfig config = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
+                map.put("dueape", "com.dueape.admin");
+                this.setMap(map);
+            }
+        };
+        List<FileOutConfig> files = new ArrayList<FileOutConfig>();
+        files.add(new FileOutConfig(vmPath) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                String expand = output + "/" + "doc/";
+                String entityFile = String.format(("%s" + ".txt"), tableInfo.getEntityName());
+                return expand + entityFile;
+            }
+        });
+        config.setFileOutConfigList(files);
+        return config;
+    }
+
+}

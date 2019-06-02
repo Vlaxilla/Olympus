@@ -1,0 +1,56 @@
+package com.rental.service.impl;
+
+import com.rental.QO.LocationForm;
+import com.rental.common.PageBean;
+import com.rental.common.Result;
+import com.rental.entity.Car;
+import com.rental.entity.Location;
+import com.rental.mapper.LocationMapper;
+import com.rental.service.ILocationService;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
+import com.baomidou.mybatisplus.plugins.Page;
+/**
+ * <p>
+ *  Service implementation class?
+ * </p>
+ */
+@Service
+
+public class LocationServiceImpl extends ServiceImpl<LocationMapper, Location> implements ILocationService {
+    @Override
+    public String findLocations(LocationForm form) {
+        Page<Location> page = form.getPage();
+        if (page == null) {
+            page = form.createPage();
+        }
+        page.setRecords(baseMapper.selectPage(page, form.toWrapper()));
+        return Result.genResponse(Result.ok(new PageBean<>(page)));
+    }
+
+    @Override
+    public String showCar(LocationForm form) {
+        if(form.getLocationId() == null) {
+            return Result.genResponse(Result.fail("params error"));
+        }
+        Page<Car> page = form.getPage();
+        if (page == null) {
+            page = form.createPage();
+        }
+        Integer locationId = form.getLocationId();
+        form.setLocationId(null);
+        page.setRecords(baseMapper.showCar(page, form.toWrapper(),locationId));
+        return Result.genResponse(Result.ok(new PageBean<>(page)));
+    }
+
+    @Override
+    public String showNoRelateCar(LocationForm form) {
+        Page<Car> page = form.getPage();
+        if (page == null) {
+            page = form.createPage();
+        }
+        page.setRecords(baseMapper.showNoRelateCar(page, form.toWrapper()));
+        return Result.genResponse(Result.ok(new PageBean<>(page)));
+    }
+}
+

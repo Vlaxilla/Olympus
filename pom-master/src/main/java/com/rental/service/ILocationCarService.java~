@@ -1,0 +1,11 @@
+package com.rental.service;
+
+
+import com.baomidou.mybatisplus.service.IService;
+import com.rental.entity.LocationCar;
+
+/**
+ * <p>
+
+public interface ILocationCarService extends IService<LocationCar> {
+}

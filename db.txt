@@ -1,0 +1,7 @@
+﻿database: mysql 
+version：5.7
+ip address: 3.83.146.138
+port：3306
+database name：rental
+username：root
+password 123456
